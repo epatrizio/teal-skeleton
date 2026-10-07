@@ -27,3 +27,8 @@ local mod_lua = require("mod_lua")  -- no type information for required module: 
 data_1 = mod_lua.key_1
 data_2 = mod_lua.key_2
 print(data_1, data_2)
+
+-- Lua C module
+
+local factorial = require("cfactorial")     -- cfactorial.d.tl type_interface
+print(factorial.fact(5))
