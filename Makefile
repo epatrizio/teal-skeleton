@@ -6,10 +6,13 @@ CFLAGS = -g -fPIC -Wall -Werror
 CFLAGS_LUA = $(CFLAGS) -I/$(LUALIB)
 CC=gcc
 
-cfactorial.so: cfactorial.o
+tl_run_main: build/cfactorial.so
+	tl run src/main.tl
+
+build/cfactorial.so: build/cfactorial.o
 	$(CC) $(CFLAGS_LUA) -shared -o build/cfactorial.so build/cfactorial.o
 
-cfactorial.o: src/cfactorial.c
+build/cfactorial.o:
 	$(CC) $(CFLAGS_LUA) -I$(LUAJITLIB) -c src/cfactorial.c -o build/cfactorial.o
 
 # ----
