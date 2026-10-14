@@ -6,7 +6,21 @@ CFLAGS = -g -fPIC -Wall -Werror
 CFLAGS_LUA = $(CFLAGS) -I/$(LUALIB)
 CC=gcc
 
-tl_run_main: build/cfactorial.so
+# ----
+
+lua_run_tlmain: build/main_tl.lua
+	cd build; lua main_tl.lua
+
+build/main_tl.lua: build/mod_tl.lua build/mod_lua.lua build/cfactorial.so
+	tl gen src/main.tl;
+	mv main.lua build/main_tl.lua;
+
+build/mod_lua.lua:
+	cp src/mod_lua.lua build/mod_lua.lua;
+
+# ----
+
+tl_run_tlmain: build/cfactorial.so
 	tl run src/main.tl
 
 build/cfactorial.so: build/cfactorial.o
@@ -15,7 +29,10 @@ build/cfactorial.so: build/cfactorial.o
 build/cfactorial.o:
 	$(CC) $(CFLAGS_LUA) -I$(LUAJITLIB) -c src/cfactorial.c -o build/cfactorial.o
 
-# ---- lua_run_tlmain
+# ----
+
+lua_main:
+	lua src/main.lua
 
 # ----
 
